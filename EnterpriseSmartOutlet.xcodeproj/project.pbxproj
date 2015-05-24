@@ -9,11 +9,16 @@
 /* Begin PBXBuildFile section */
 		CB1EFF8F1AA4227200C41470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFF8E1AA4227200C41470 /* AppDelegate.swift */; };
 		CB1EFF921AA4227200C41470 /* EnterpriseSmartOutlet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFF901AA4227200C41470 /* EnterpriseSmartOutlet.xcdatamodeld */; };
-		CB1EFF941AA4227200C41470 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFF931AA4227200C41470 /* ViewController.swift */; };
 		CB1EFF971AA4227200C41470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB1EFF951AA4227200C41470 /* Main.storyboard */; };
 		CB1EFF991AA4227200C41470 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB1EFF981AA4227200C41470 /* Images.xcassets */; };
 		CB1EFF9C1AA4227200C41470 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB1EFF9A1AA4227200C41470 /* LaunchScreen.xib */; };
 		CB1EFFA81AA4227200C41470 /* EnterpriseSmartOutletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFFA71AA4227200C41470 /* EnterpriseSmartOutletTests.swift */; };
+		CB1EFFB41AA4272300C41470 /* OutletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFFB31AA4272300C41470 /* OutletViewController.swift */; };
+		CB1EFFB61AA4294300C41470 /* Outlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFFB51AA4294300C41470 /* Outlet.swift */; };
+		CB9F0F911B1135D700B6968A /* SampleInput.json in Resources */ = {isa = PBXBuildFile; fileRef = CB9F0F901B1135D700B6968A /* SampleInput.json */; };
+		CB9F0F931B11364500B6968A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F0F921B11364500B6968A /* MainViewController.swift */; };
+		CBA10B391B0C460600B4D63B /* TreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA10B381B0C460600B4D63B /* TreeViewController.swift */; };
+		CCE0FFED6F8EA42E27D25DE8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E059E2190F59FEAC4E29867 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,17 +32,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13A2EA16F69A0D907158A439 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		2E059E2190F59FEAC4E29867 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D7DD606C09BC308528B678B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CB1EFF891AA4227200C41470 /* EnterpriseSmartOutlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnterpriseSmartOutlet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1EFF8D1AA4227200C41470 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB1EFF8E1AA4227200C41470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB1EFF911AA4227200C41470 /* EnterpriseSmartOutlet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EnterpriseSmartOutlet.xcdatamodel; sourceTree = "<group>"; };
-		CB1EFF931AA4227200C41470 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CB1EFF961AA4227200C41470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB1EFF981AA4227200C41470 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CB1EFF9B1AA4227200C41470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		CB1EFFA11AA4227200C41470 /* EnterpriseSmartOutletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnterpriseSmartOutletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1EFFA61AA4227200C41470 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB1EFFA71AA4227200C41470 /* EnterpriseSmartOutletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterpriseSmartOutletTests.swift; sourceTree = "<group>"; };
+		CB1EFFB31AA4272300C41470 /* OutletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutletViewController.swift; sourceTree = "<group>"; };
+		CB1EFFB51AA4294300C41470 /* Outlet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Outlet.swift; sourceTree = "<group>"; };
+		CB9F0F901B1135D700B6968A /* SampleInput.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleInput.json; sourceTree = "<group>"; };
+		CB9F0F921B11364500B6968A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CBA10B331B0C3C3B00B4D63B /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		CBA10B381B0C460600B4D63B /* TreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCE0FFED6F8EA42E27D25DE8 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,12 +72,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6491591CFF74879B959629A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E059E2190F59FEAC4E29867 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7C22DF1B55599BFCA9B46943 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				13A2EA16F69A0D907158A439 /* Pods.debug.xcconfig */,
+				5D7DD606C09BC308528B678B /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CB1EFF801AA4227200C41470 = {
 			isa = PBXGroup;
 			children = (
 				CB1EFF8B1AA4227200C41470 /* EnterpriseSmartOutlet */,
 				CB1EFFA41AA4227200C41470 /* EnterpriseSmartOutletTests */,
 				CB1EFF8A1AA4227200C41470 /* Products */,
+				7C22DF1B55599BFCA9B46943 /* Pods */,
+				6491591CFF74879B959629A7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,8 +112,11 @@
 		CB1EFF8B1AA4227200C41470 /* EnterpriseSmartOutlet */ = {
 			isa = PBXGroup;
 			children = (
+				CB9F0F921B11364500B6968A /* MainViewController.swift */,
 				CB1EFF8E1AA4227200C41470 /* AppDelegate.swift */,
-				CB1EFF931AA4227200C41470 /* ViewController.swift */,
+				CBA10B381B0C460600B4D63B /* TreeViewController.swift */,
+				CB1EFFB51AA4294300C41470 /* Outlet.swift */,
+				CB1EFFB31AA4272300C41470 /* OutletViewController.swift */,
 				CB1EFF951AA4227200C41470 /* Main.storyboard */,
 				CB1EFF981AA4227200C41470 /* Images.xcassets */,
 				CB1EFF9A1AA4227200C41470 /* LaunchScreen.xib */,
@@ -93,7 +129,9 @@
 		CB1EFF8C1AA4227200C41470 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CB9F0F901B1135D700B6968A /* SampleInput.json */,
 				CB1EFF8D1AA4227200C41470 /* Info.plist */,
+				CBA10B331B0C3C3B00B4D63B /* Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -122,9 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CB1EFFAB1AA4227200C41470 /* Build configuration list for PBXNativeTarget "EnterpriseSmartOutlet" */;
 			buildPhases = (
+				6401124A175F6D686BE917D6 /* Check Pods Manifest.lock */,
 				CB1EFF851AA4227200C41470 /* Sources */,
 				CB1EFF861AA4227200C41470 /* Frameworks */,
 				CB1EFF871AA4227200C41470 /* Resources */,
+				66764FE48EF9423737F0220E /* Embed Pods Frameworks */,
+				207B38D04FC605FED96A87A0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -197,6 +238,7 @@
 			files = (
 				CB1EFF971AA4227200C41470 /* Main.storyboard in Resources */,
 				CB1EFF9C1AA4227200C41470 /* LaunchScreen.xib in Resources */,
+				CB9F0F911B1135D700B6968A /* SampleInput.json in Resources */,
 				CB1EFF991AA4227200C41470 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,13 +252,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		207B38D04FC605FED96A87A0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6401124A175F6D686BE917D6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		66764FE48EF9423737F0220E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CB1EFF851AA4227200C41470 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB1EFF941AA4227200C41470 /* ViewController.swift in Sources */,
+				CB1EFFB41AA4272300C41470 /* OutletViewController.swift in Sources */,
 				CB1EFF8F1AA4227200C41470 /* AppDelegate.swift in Sources */,
+				CB1EFFB61AA4294300C41470 /* Outlet.swift in Sources */,
+				CB9F0F931B11364500B6968A /* MainViewController.swift in Sources */,
+				CBA10B391B0C460600B4D63B /* TreeViewController.swift in Sources */,
 				CB1EFF921AA4227200C41470 /* EnterpriseSmartOutlet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,21 +431,25 @@
 		};
 		CB1EFFAC1AA4227200C41470 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13A2EA16F69A0D907158A439 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = EnterpriseSmartOutlet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EnterpriseSmartOutlet/Bridging-Header.h";
 			};
 			name = Debug;
 		};
 		CB1EFFAD1AA4227200C41470 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D7DD606C09BC308528B678B /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = EnterpriseSmartOutlet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EnterpriseSmartOutlet/Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -409,6 +506,7 @@
 				CB1EFFAD1AA4227200C41470 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CB1EFFAE1AA4227200C41470 /* Build configuration list for PBXNativeTarget "EnterpriseSmartOutletTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +515,7 @@
 				CB1EFFB01AA4227200C41470 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
