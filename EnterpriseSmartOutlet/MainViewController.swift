@@ -20,6 +20,12 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if let ip = userDefaults.valueForKey("IP") as? String {
+            self.ipAddress = ip
+        }
+        
         getJson()
     }
     
@@ -55,6 +61,9 @@ class MainViewController: UITableViewController {
             if let textFields = alert.textFields as? [UITextField] {
                 let field = textFields[0]
                 self.ipAddress = field.text
+                let userDefaults = NSUserDefaults.standardUserDefaults()
+                userDefaults.setObject(self.ipAddress, forKey: "IP")
+                userDefaults.synchronize()
                 //println("The new server IP Address is: " + field.text)
             }
         })
