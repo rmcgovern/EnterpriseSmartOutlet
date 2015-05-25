@@ -44,11 +44,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Outlets" id="IP4-nt-EAp">
-                        <barButtonItem key="leftBarButtonItem" title="Test View (Broken)" id="2pa-S9-prN">
-                            <connections>
-                                <segue destination="jBe-Ya-KCn" kind="show" id="swz-BA-GJv"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Change IP" id="RzY-5Q-6rd">
                             <connections>
                                 <action selector="changeIPButtonPressed:" destination="U0z-IH-fMV" id="98H-Z1-LlO"/>

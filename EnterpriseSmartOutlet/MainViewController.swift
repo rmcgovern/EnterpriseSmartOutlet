@@ -25,6 +25,7 @@ class MainViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull down to refresh")
         self.tableView.addSubview(refreshControl!)
+        self.tableView.reloadData()
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
