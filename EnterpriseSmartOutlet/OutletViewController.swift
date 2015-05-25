@@ -12,6 +12,7 @@ import RealmSwift
 class OutletViewController: UIViewController {
     
     var outlet: Outlet?
+    var ipAddress: String?
 
     @IBOutlet weak var voltageLabel: UILabel!
     @IBOutlet weak var currentLabel: UILabel!
@@ -38,8 +39,17 @@ class OutletViewController: UIViewController {
     
     @IBAction func toggleButtonPressed(sender: AnyObject) {
         if let newOutlet = outlet {
-            //outlet?.onStatus = !(newOutlet.onStatus!)
-            //println("Outlet is on: \(outlet?.onStatus)")
+//            let requestString = outlet?.id
+//            if let ip = self.ipAddress {
+//                let url = NSURL(string: ip)
+//                var session = NSURLSession.sharedSession()
+//                let request = NSMutableURLRequest(URL: url!)
+//                request.HTTPMethod = "POST"
+//            }
+            let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
+            let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(okay)
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 

@@ -12,7 +12,6 @@ import RealmSwift
 
 class Outlet: Object {
     
-    dynamic var id: Int = -1
     dynamic var macAddress: String = "MAC Address Not Found"
     dynamic var voltage: Double = -1.0
     dynamic var current: Double = -1.0
@@ -22,7 +21,6 @@ class Outlet: Object {
     convenience init(id: Int!, macAddress: String!, voltage: Double!, current: Double!, name: String!, details: String!) {
         self.init()
         
-        self.id = id
         self.macAddress = macAddress
         self.voltage = voltage
         self.current = current

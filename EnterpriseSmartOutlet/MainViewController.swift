@@ -15,10 +15,16 @@ class MainViewController: UITableViewController {
     
     var outlets: [Outlet] = [Outlet]()
     
-    var ipAddress: String?
+    var ipAddress: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //let realm = Realm()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull down to refresh")
+        self.tableView.addSubview(refreshControl!)
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
@@ -26,10 +32,19 @@ class MainViewController: UITableViewController {
             self.ipAddress = ip
         }
         
-        getJson()
+        if self.ipAddress == "" {
+            self.refreshControl!.addTarget(self, action: "getMockJson", forControlEvents: UIControlEvents.ValueChanged)
+            getMockJson()
+        }
+        else {
+            self.refreshControl!.addTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
+            getJson()
+        }
+        
     }
     
-    func getJson() {
+    func getMockJson() {
+        outlets.removeAll(keepCapacity: false)
         if let
             jsonString     = NSString(contentsOfFile: NSBundle.mainBundle().pathForResource("SampleInput", ofType: "json")!, encoding: NSUTF8StringEncoding, error: nil),
             dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),
@@ -37,7 +52,6 @@ class MainViewController: UITableViewController {
             if let outletList = userList["outlets"] as? [AnyObject] {
                 for outletJSON in outletList {
                     let outlet = Outlet()
-                    outlet.id = (outletJSON["id"] as? Int)!
                     outlet.macAddress = (outletJSON["mac_address"] as? String)!
                     outlet.voltage = (outletJSON["voltage"] as? Double)!
                     outlet.current = (outletJSON["current"] as? Double)!
@@ -46,6 +60,41 @@ class MainViewController: UITableViewController {
                     outlets.append(outlet)
                 }
             }
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func getJson() {
+        outlets.removeAll(keepCapacity: false)
+        
+        if let url = NSURL(string: "http://" + ipAddress + ":1337/list_all") {
+            let urlRequest = NSURLRequest(URL: url)
+            NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+                    if error == nil {
+                        println(data)
+                        if let userList = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
+                            if let outletList = userList["outlets"] as? [AnyObject] {
+                                for outletJSON in outletList {
+                                    let outlet = Outlet()
+                                    outlet.macAddress = (outletJSON["mac_address"] as? String)!
+                                    outlet.voltage = (outletJSON["voltage"] as? Double)!
+                                    outlet.current = (outletJSON["current"] as? Double)!
+                                    outlet.name = (outletJSON["outlet_name"] as? String)!
+                                    outlet.details = (outletJSON["description"] as? String)!
+                                    self.outlets.append(outlet)
+                                }
+                                self.tableView.reloadData()
+                                self.refreshControl?.endRefreshing()
+                            }
+                        }
+
+                    }
+                    else {
+                        println(error.description)
+                    }
+            })
+            self.refreshControl?.endRefreshing()
         }
     }
 
@@ -65,6 +114,7 @@ class MainViewController: UITableViewController {
                 userDefaults.setObject(self.ipAddress, forKey: "IP")
                 userDefaults.synchronize()
                 //println("The new server IP Address is: " + field.text)
+                self.tableView.reloadData()
             }
         })
         
@@ -72,11 +122,17 @@ class MainViewController: UITableViewController {
         alert.addAction(save)
         alert.addTextFieldWithConfigurationHandler { (textField: UITextField!) in
             textField.keyboardType = UIKeyboardType.DecimalPad
-            if self.ipAddress == nil {
+            if self.ipAddress == "" {
                 textField.placeholder = "IP Address (ex. 127.0.0.1)"
+                self.refreshControl?.removeTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
+                self.refreshControl?.addTarget(self, action: "getMockJson", forControlEvents: UIControlEvents.ValueChanged)
+                self.getMockJson()
             }
             else {
                 textField.text = self.ipAddress
+                self.refreshControl?.removeTarget(self, action: "getMockJson", forControlEvents: UIControlEvents.ValueChanged)
+                self.refreshControl?.addTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
+                self.getJson()
             }
         }
         
@@ -122,7 +178,7 @@ class MainViewController: UITableViewController {
         cell.outlet = outlets[indexPath.row]
         cell.textLabel?.text = outlets[indexPath.row].name
         
-        if outlets[indexPath.row].current >= 0.001 {
+        if outlets[indexPath.row].current >= 0.01 {
             cell.detailTextLabel?.text = "In Use"
             cell.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
         }
@@ -157,6 +213,7 @@ class MainViewController: UITableViewController {
                 if let outletCell = sender as? OutletTableViewCell {
                     outletVC.outlet = outletCell.outlet
                     outletVC.navigationItem.title = outletCell.outlet?.name
+                    outletVC.ipAddress = self.ipAddress
                 }
             }
         }
