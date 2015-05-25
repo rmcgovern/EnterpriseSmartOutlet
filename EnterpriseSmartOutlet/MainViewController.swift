@@ -180,12 +180,14 @@ class MainViewController: UITableViewController {
         
         if outlets[indexPath.row].current >= 0.01 {
             cell.detailTextLabel?.text = "In Use"
-            cell.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //cell.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            cell.imageView?.image = UIImage(named: "InUse")
         }
         
         else {
             cell.detailTextLabel?.text = "Not In Use"
-            cell.backgroundColor = UIColor(red: 0.0, green: 0.7, blue: 0.0, alpha: 1.0)
+            //cell.backgroundColor = UIColor(red: 0.0, green: 0.7, blue: 0.0, alpha: 1.0)
+            cell.imageView?.image = UIImage(named: "Free")
         }
 
         return cell
