@@ -19,6 +19,8 @@ class OutletViewController: UIViewController {
     @IBOutlet weak var powerLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var inUseLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var statusImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,14 @@ class OutletViewController: UIViewController {
             powerLabel.text = String(format: "%.2f", newOutlet.voltage * newOutlet.current)
             locationLabel.text = newOutlet.details
             inUseLabel.text = "\(newOutlet.current >= 0.001)"
+            if newOutlet.current >= 0.001 {
+                statusLabel.text = "Status: In Use"
+                statusImage.image = UIImage(named: "InUse")
+            }
+            else {
+                statusLabel.text = "Status: Free"
+                statusImage.image = UIImage(named: "Free")
+            }
         }
     }
 
