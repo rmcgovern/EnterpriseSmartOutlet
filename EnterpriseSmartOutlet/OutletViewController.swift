@@ -57,7 +57,7 @@ class OutletViewController: UIViewController {
 //                request.HTTPMethod = "POST"
 //            }
             let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
-            let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
             alert.addAction(okay)
             self.presentViewController(alert, animated: true, completion: nil)
         }

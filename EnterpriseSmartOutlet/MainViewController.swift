@@ -16,6 +16,8 @@ class MainViewController: UITableViewController {
     var outlets: [Outlet] = [Outlet]()
     
     var ipAddress: String = ""
+    
+    var mockData: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,56 +26,60 @@ class MainViewController: UITableViewController {
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull down to refresh")
+        self.refreshControl!.addTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl!)
         self.tableView.reloadData()
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
+        
         
         if let ip = userDefaults.valueForKey("IP") as? String {
             self.ipAddress = ip
         }
         
         if self.ipAddress == "" {
-            self.refreshControl!.addTarget(self, action: "getMockJson", forControlEvents: UIControlEvents.ValueChanged)
-            getMockJson()
+            mockData = true
         }
         else {
-            self.refreshControl!.addTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
-            getJson()
+            mockData = false
         }
         
-    }
-    
-    func getMockJson() {
-        outlets.removeAll(keepCapacity: false)
-        if let
-            jsonString     = NSString(contentsOfFile: NSBundle.mainBundle().pathForResource("SampleInput", ofType: "json")!, encoding: NSUTF8StringEncoding, error: nil),
-            dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),
-            userList       = NSJSONSerialization.JSONObjectWithData(dataFromString, options: nil, error: nil) as? [String: AnyObject] {
-            if let outletList = userList["outlets"] as? [AnyObject] {
-                for outletJSON in outletList {
-                    let outlet = Outlet()
-                    outlet.macAddress = (outletJSON["mac_address"] as? String)!
-                    outlet.voltage = (outletJSON["voltage"] as? Double)!
-                    outlet.current = (outletJSON["current"] as? Double)!
-                    outlet.name = (outletJSON["outlet_name"] as? String)!
-                    outlet.details = (outletJSON["description"] as? String)!
-                    outlets.append(outlet)
-                }
-            }
-            self.tableView.reloadData()
-            self.refreshControl?.endRefreshing()
-        }
+        getJson()
+        
     }
     
     func getJson() {
         outlets.removeAll(keepCapacity: false)
         
-        if let url = NSURL(string: "http://" + ipAddress + ":1337/list_all") {
-            let urlRequest = NSURLRequest(URL: url)
-            NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+        if mockData {
+            if let
+                jsonString     = NSString(contentsOfFile: NSBundle.mainBundle().pathForResource("SampleInput", ofType: "json")!, encoding: NSUTF8StringEncoding, error: nil),
+                dataFromString = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),
+                userList       = NSJSONSerialization.JSONObjectWithData(dataFromString, options: nil, error: nil) as? [String: AnyObject] {
+                    if let outletList = userList["outlets"] as? [AnyObject] {
+                        for outletJSON in outletList {
+                            let outlet = Outlet()
+                            outlet.macAddress = (outletJSON["mac_address"] as? String)!
+                            outlet.voltage = (outletJSON["voltage"] as? Double)!
+                            outlet.current = (outletJSON["current"] as? Double)!
+                            outlet.name = (outletJSON["outlet_name"] as? String)!
+                            outlet.details = (outletJSON["description"] as? String)!
+                            outlets.append(outlet)
+                        }
+                    }
+                    self.refreshControl?.beginRefreshing()
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
+            }
+
+        }
+        
+        else {
+            if let url = NSURL(string: "http://" + ipAddress + ":1337/list_all") {
+                let urlRequest = NSURLRequest(URL: url)
+                NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                     if error == nil {
-                        println(data)
+                        //println(data)
                         if let userList = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
                             if let outletList = userList["outlets"] as? [AnyObject] {
                                 for outletJSON in outletList {
@@ -85,17 +91,24 @@ class MainViewController: UITableViewController {
                                     outlet.details = (outletJSON["description"] as? String)!
                                     self.outlets.append(outlet)
                                 }
+                                self.refreshControl?.beginRefreshing()
                                 self.tableView.reloadData()
                                 self.refreshControl?.endRefreshing()
                             }
                         }
-
+                        
                     }
                     else {
-                        println(error.description)
+                        self.refreshControl?.beginRefreshing()
+                        let alert = UIAlertController(title: "Server Connection Error", message: "Could not connect to the server. Please double check that you entered the correct IP address.", preferredStyle: UIAlertControllerStyle.Alert)
+                        let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                        alert.addAction(okay)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.refreshControl?.endRefreshing()
                     }
-            })
-            self.refreshControl?.endRefreshing()
+                })
+                self.refreshControl?.endRefreshing()
+            }
         }
     }
 
@@ -114,7 +127,14 @@ class MainViewController: UITableViewController {
                 let userDefaults = NSUserDefaults.standardUserDefaults()
                 userDefaults.setObject(self.ipAddress, forKey: "IP")
                 userDefaults.synchronize()
+                if self.ipAddress == "" {
+                    self.mockData = true
+                }
+                else {
+                    self.mockData = false
+                }
                 //println("The new server IP Address is: " + field.text)
+                self.getJson()
                 self.tableView.reloadData()
             }
         })
@@ -125,15 +145,9 @@ class MainViewController: UITableViewController {
             textField.keyboardType = UIKeyboardType.DecimalPad
             if self.ipAddress == "" {
                 textField.placeholder = "IP Address (ex. 127.0.0.1)"
-                self.refreshControl?.removeTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
-                self.refreshControl?.addTarget(self, action: "getMockJson", forControlEvents: UIControlEvents.ValueChanged)
-                self.getMockJson()
             }
             else {
                 textField.text = self.ipAddress
-                self.refreshControl?.removeTarget(self, action: "getMockJson", forControlEvents: UIControlEvents.ValueChanged)
-                self.refreshControl?.addTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
-                self.getJson()
             }
         }
         
@@ -166,6 +180,7 @@ class MainViewController: UITableViewController {
         if outlets.count == 0 {
             cell.textLabel?.text = "No Outlets Found"
             cell.detailTextLabel?.text = "Please check that the IP Address of the sever is correct."
+            cell.imageView?.image = UIImage(named: "Inactive")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             tableView.allowsSelection = false
             return cell
