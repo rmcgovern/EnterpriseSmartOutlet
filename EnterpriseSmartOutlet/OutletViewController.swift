@@ -48,29 +48,46 @@ class OutletViewController: UIViewController {
     }
     
     @IBAction func toggleButtonPressed(sender: AnyObject) {
-        if let newOutlet = outlet {
-//            let requestString = outlet?.id
-//            if let ip = self.ipAddress {
-//                let url = NSURL(string: ip)
-//                var session = NSURLSession.sharedSession()
-//                let request = NSMutableURLRequest(URL: url!)
-//                request.HTTPMethod = "POST"
+        if let newOutlet = outlet,
+               newIP     = ipAddress {
+//            var url: NSURL?
+//                
+//            if newOutlet.active {
+//                url = NSURL(string: "http://" + newIP + ":1337/?deactivate=" + newOutlet.macAddress)
 //            }
+//            else {
+//                url = NSURL(string: "http://" + newIP + ":1337/?activate=" + newOutlet.macAddress)
+//            }
+//            
+//            if url != nil {
+//                let urlRequest = NSURLRequest(URL: url!)
+//                NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in })
+//                let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
+//                let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+//                alert.addAction(okay)
+//                self.presentViewController(alert, animated: true, completion: nil)
+//            }
+//            else {
+//                let alert = UIAlertController(title: "Problem Forming Server URL", message: "There has been a problem toggling the outlet.", preferredStyle: UIAlertControllerStyle.Alert)
+//                let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+//                alert.addAction(okay)
+//                self.presentViewController(alert, animated: true, completion: nil)
+//            }
+            
             let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
             let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
             alert.addAction(okay)
             self.presentViewController(alert, animated: true, completion: nil)
+
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    // MARK: - Navigation
+//
+//    // In a storyboard-based application, you will often want to do a little preparation before navigation
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        // Get the new view controller using segue.destinationViewController.
+//        // Pass the selected object to the new view controller.
+//    }
 
 }

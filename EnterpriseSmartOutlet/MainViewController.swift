@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import SwiftyJSON
-import ObjectMapper
 import RealmSwift
 
 class MainViewController: UITableViewController {
+    
+    let realm = Realm()
     
     var outlets: [Outlet] = [Outlet]()
     
@@ -22,30 +22,44 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let realm = Realm()
+        self.clearsSelectionOnViewWillAppear = false
         
+        loadLastKnowOutlets()
+        
+        // Add pull to refresh on table view
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull down to refresh")
         self.refreshControl!.addTarget(self, action: "getJson", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl!)
         self.tableView.reloadData()
         
+        // Check to see if there is a previously used IP Address
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        
-        
         if let ip = userDefaults.valueForKey("IP") as? String {
             self.ipAddress = ip
         }
         
+        // If the IP Address is blank, then load the mock data
         if self.ipAddress == "" {
             mockData = true
         }
+        // Else, load read data from the IP Address
         else {
             mockData = false
         }
         
         getJson()
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let row = self.tableView.indexPathForSelectedRow() {
+            self.tableView.deselectRowAtIndexPath(row, animated: animated)
+        }
+        
+        getJson()
     }
     
     func getJson() {
@@ -63,7 +77,9 @@ class MainViewController: UITableViewController {
                             outlet.voltage = (outletJSON["voltage"] as? Double)!
                             outlet.current = (outletJSON["current"] as? Double)!
                             outlet.name = (outletJSON["outlet_name"] as? String)!
+                            outlet.group = (outletJSON["outlet_group"] as? String)!
                             outlet.details = (outletJSON["description"] as? String)!
+                            outlet.lastContact = (outletJSON["last_contact"] as? String)!
                             outlets.append(outlet)
                         }
                     }
@@ -79,24 +95,31 @@ class MainViewController: UITableViewController {
                 let urlRequest = NSURLRequest(URL: url)
                 NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                     if error == nil {
-                        //println(data)
                         if let userList = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
                             if let outletList = userList["outlets"] as? [AnyObject] {
+                                self.realm.write {
+                                    self.realm.deleteAll()
+                                }
                                 for outletJSON in outletList {
                                     let outlet = Outlet()
                                     outlet.macAddress = (outletJSON["mac_address"] as? String)!
                                     outlet.voltage = (outletJSON["voltage"] as? Double)!
                                     outlet.current = (outletJSON["current"] as? Double)!
                                     outlet.name = (outletJSON["outlet_name"] as? String)!
+                                    outlet.group = (outletJSON["outlet_group"] as? String)!
                                     outlet.details = (outletJSON["description"] as? String)!
+                                    outlet.lastContact = (outletJSON["last_contact"] as? String)!
                                     self.outlets.append(outlet)
+                                    self.realm.write {
+                                        self.realm.add(outlet)
+                                    }
                                 }
                                 self.refreshControl?.beginRefreshing()
                                 self.tableView.reloadData()
                                 self.refreshControl?.endRefreshing()
                             }
                         }
-                        
+                        self.tableView.reloadData()
                     }
                     else {
                         self.refreshControl?.beginRefreshing()
@@ -107,14 +130,20 @@ class MainViewController: UITableViewController {
                         self.refreshControl?.endRefreshing()
                     }
                 })
+                self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
             }
+            self.tableView.reloadData()
         }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loadLastKnowOutlets() {
+        
     }
 
     @IBAction func changeIPButtonPressed(sender: AnyObject) {
@@ -133,7 +162,6 @@ class MainViewController: UITableViewController {
                 else {
                     self.mockData = false
                 }
-                //println("The new server IP Address is: " + field.text)
                 self.getJson()
                 self.tableView.reloadData()
             }
@@ -193,16 +221,17 @@ class MainViewController: UITableViewController {
         // Configure the cell...
         cell.outlet = outlets[indexPath.row]
         cell.textLabel?.text = outlets[indexPath.row].name
+        cell.detailTextLabel?.text = outlets[indexPath.row].group
         
         if outlets[indexPath.row].current >= 0.01 {
-            cell.detailTextLabel?.text = "In Use"
-            //cell.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
             cell.imageView?.image = UIImage(named: "InUse")
+        }
+            
+        else if outlets[indexPath.row].active == false {
+            cell.imageView?.image = UIImage(named: "Inactive")
         }
         
         else {
-            cell.detailTextLabel?.text = "Not In Use"
-            //cell.backgroundColor = UIColor(red: 0.0, green: 0.7, blue: 0.0, alpha: 1.0)
             cell.imageView?.image = UIImage(named: "Free")
         }
 

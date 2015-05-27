@@ -16,7 +16,10 @@ class Outlet: Object {
     dynamic var voltage: Double = -1.0
     dynamic var current: Double = -1.0
     dynamic var name: String = "Name Not Found"
+    dynamic var group: String = "Group Not Found"
     dynamic var details: String = "Description Not Found"
+    dynamic var lastContact: String = "Last Contact Not Found"
+    dynamic var active: Bool = true
     
     convenience init(id: Int!, macAddress: String!, voltage: Double!, current: Double!, name: String!, details: String!) {
         self.init()

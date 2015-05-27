@@ -17,7 +17,6 @@
 		CB1EFFB61AA4294300C41470 /* Outlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1EFFB51AA4294300C41470 /* Outlet.swift */; };
 		CB9F0F911B1135D700B6968A /* SampleInput.json in Resources */ = {isa = PBXBuildFile; fileRef = CB9F0F901B1135D700B6968A /* SampleInput.json */; };
 		CB9F0F931B11364500B6968A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9F0F921B11364500B6968A /* MainViewController.swift */; };
-		CBA10B391B0C460600B4D63B /* TreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA10B381B0C460600B4D63B /* TreeViewController.swift */; };
 		CCE0FFED6F8EA42E27D25DE8 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E059E2190F59FEAC4E29867 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -50,7 +49,6 @@
 		CB9F0F901B1135D700B6968A /* SampleInput.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleInput.json; sourceTree = "<group>"; };
 		CB9F0F921B11364500B6968A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CBA10B331B0C3C3B00B4D63B /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		CBA10B381B0C460600B4D63B /* TreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +112,6 @@
 			children = (
 				CB9F0F921B11364500B6968A /* MainViewController.swift */,
 				CB1EFF8E1AA4227200C41470 /* AppDelegate.swift */,
-				CBA10B381B0C460600B4D63B /* TreeViewController.swift */,
 				CB1EFFB51AA4294300C41470 /* Outlet.swift */,
 				CB1EFFB31AA4272300C41470 /* OutletViewController.swift */,
 				CB1EFF951AA4227200C41470 /* Main.storyboard */,
@@ -309,7 +306,6 @@
 				CB1EFF8F1AA4227200C41470 /* AppDelegate.swift in Sources */,
 				CB1EFFB61AA4294300C41470 /* Outlet.swift in Sources */,
 				CB9F0F931B11364500B6968A /* MainViewController.swift in Sources */,
-				CBA10B391B0C460600B4D63B /* TreeViewController.swift in Sources */,
 				CB1EFF921AA4227200C41470 /* EnterpriseSmartOutlet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
