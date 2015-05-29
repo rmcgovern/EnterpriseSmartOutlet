@@ -22,6 +22,13 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let logoImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 102, height: 44))
+        logoImage.contentMode = UIViewContentMode.ScaleAspectFit
+        logoImage.image = UIImage(named: "ESOLogo")
+        let logoView = UIView(frame: CGRect(x: 0, y: 0, width: logoImage.frame.size.width, height: logoImage.frame.size.height))
+        logoView.addSubview(logoImage)
+        self.navigationItem.titleView = logoView
+        
         self.clearsSelectionOnViewWillAppear = false
         
         loadLastKnowOutlets()
@@ -97,22 +104,36 @@ class MainViewController: UITableViewController {
                     if error == nil {
                         if let userList = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject] {
                             if let outletList = userList["outlets"] as? [AnyObject] {
-                                self.realm.write {
-                                    self.realm.deleteAll()
-                                }
+//                                self.realm.write {
+//                                    self.realm.deleteAll()
+//                                }
                                 for outletJSON in outletList {
                                     let outlet = Outlet()
-                                    outlet.macAddress = (outletJSON["mac_address"] as? String)!
-                                    outlet.voltage = (outletJSON["voltage"] as? Double)!
-                                    outlet.current = (outletJSON["current"] as? Double)!
-                                    outlet.name = (outletJSON["outlet_name"] as? String)!
-                                    outlet.group = (outletJSON["outlet_group"] as? String)!
-                                    outlet.details = (outletJSON["description"] as? String)!
-                                    outlet.lastContact = (outletJSON["last_contact"] as? String)!
-                                    self.outlets.append(outlet)
-                                    self.realm.write {
-                                        self.realm.add(outlet)
+                                    if let mac = outletJSON["mac_address"] as? String {
+                                        outlet.macAddress = mac
                                     }
+                                    if let volt = outletJSON["voltage"] as? Double {
+                                        outlet.voltage = volt
+                                    }
+                                    if let cur = outletJSON["current"] as? Double {
+                                        outlet.current = cur
+                                    }
+                                    if let name = outletJSON["outlet_name"] as? String {
+                                        outlet.name = name
+                                    }
+                                    if let group = outletJSON["outlet_group"] as? String {
+                                        outlet.group = group
+                                    }
+                                    if let desc = outletJSON["description"] as? String {
+                                        outlet.details = desc
+                                    }
+                                    if let last = outletJSON["last_contact"] as? String {
+                                        outlet.lastContact = last
+                                    }
+                                    self.outlets.append(outlet)
+//                                    self.realm.write {
+//                                        self.realm.add(outlet)
+//                                    }
                                 }
                                 self.refreshControl?.beginRefreshing()
                                 self.tableView.reloadData()

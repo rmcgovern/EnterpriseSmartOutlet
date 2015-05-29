@@ -17,8 +17,9 @@ class OutletViewController: UIViewController {
     @IBOutlet weak var voltageLabel: UILabel!
     @IBOutlet weak var currentLabel: UILabel!
     @IBOutlet weak var powerLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var inUseLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var groupLabel: UILabel!
+    @IBOutlet weak var lastContactLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var statusImage: UIImageView!
     
@@ -29,16 +30,22 @@ class OutletViewController: UIViewController {
             voltageLabel.text = String(format: "%.2f", newOutlet.voltage)
             currentLabel.text = String(format: "%.2f", newOutlet.current)
             powerLabel.text = String(format: "%.2f", newOutlet.voltage * newOutlet.current)
-            locationLabel.text = newOutlet.details
-            inUseLabel.text = "\(newOutlet.current >= 0.001)"
-            if newOutlet.current >= 0.001 {
-                statusLabel.text = "Status: In Use"
-                statusImage.image = UIImage(named: "InUse")
-            }
-            else {
-                statusLabel.text = "Status: Free"
-                statusImage.image = UIImage(named: "Free")
-            }
+            descriptionLabel.text = newOutlet.details
+            groupLabel.text = newOutlet.group
+            lastContactLabel.text = newOutlet.lastContact
+            
+            setStatus(newOutlet)
+        }
+    }
+    
+    func setStatus(newOutlet: Outlet) {
+        if newOutlet.current >= 0.001 {
+            statusLabel.text = "Status: In Use"
+            statusImage.image = UIImage(named: "InUse")
+        }
+        else {
+            statusLabel.text = "Status: Free"
+            statusImage.image = UIImage(named: "Free")
         }
     }
 
@@ -50,34 +57,51 @@ class OutletViewController: UIViewController {
     @IBAction func toggleButtonPressed(sender: AnyObject) {
         if let newOutlet = outlet,
                newIP     = ipAddress {
-//            var url: NSURL?
-//                
-//            if newOutlet.active {
-//                url = NSURL(string: "http://" + newIP + ":1337/?deactivate=" + newOutlet.macAddress)
-//            }
-//            else {
-//                url = NSURL(string: "http://" + newIP + ":1337/?activate=" + newOutlet.macAddress)
-//            }
-//            
-//            if url != nil {
-//                let urlRequest = NSURLRequest(URL: url!)
-//                NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in })
+            var url: NSURL?
+                
+            if newOutlet.active {
+                url = NSURL(string: "http://" + newIP + ":1337/?deactivate=" + newOutlet.macAddress)
+                outlet!.active = false
+                statusLabel.text = "Status: Inactive"
+                statusImage.image = UIImage(named: "Inactive")
+            }
+            else {
+                url = NSURL(string: "http://" + newIP + ":1337/?activate=" + newOutlet.macAddress)
+                outlet!.active = true
+                setStatus(newOutlet)
+            }
+            
+            if url != nil {
+                let urlRequest = NSURLRequest(URL: url!)
+                NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in })
 //                let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
 //                let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
 //                alert.addAction(okay)
 //                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            
+            else {
+                let alert = UIAlertController(title: "Problem Forming Server URL", message: "There has been a problem toggling the outlet.", preferredStyle: UIAlertControllerStyle.Alert)
+                let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                alert.addAction(okay)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            
+//            let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
+//            let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+//            alert.addAction(okay)
+//                
+//            if !newOutlet.active {
+//                outlet!.active = true
+//                setStatus(newOutlet)
 //            }
 //            else {
-//                let alert = UIAlertController(title: "Problem Forming Server URL", message: "There has been a problem toggling the outlet.", preferredStyle: UIAlertControllerStyle.Alert)
-//                let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
-//                alert.addAction(okay)
-//                self.presentViewController(alert, animated: true, completion: nil)
+//                outlet!.active = false
+//                statusLabel.text = "Status: Inactive"
+//                statusImage.image = UIImage(named: "Inactive")
 //            }
-            
-            let alert = UIAlertController(title: newOutlet.name + " Toggled", message: newOutlet.name + " has been toggled on/off.", preferredStyle: UIAlertControllerStyle.Alert)
-            let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
-            alert.addAction(okay)
-            self.presentViewController(alert, animated: true, completion: nil)
+//                
+//            self.presentViewController(alert, animated: true, completion: nil)
 
         }
     }
