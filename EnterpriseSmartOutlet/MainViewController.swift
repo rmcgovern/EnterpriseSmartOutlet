@@ -22,6 +22,7 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Adding the logo to the main screen
         let logoImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 102, height: 44))
         logoImage.contentMode = UIViewContentMode.ScaleAspectFit
         logoImage.image = UIImage(named: "ESOLogo")
@@ -129,6 +130,14 @@ class MainViewController: UITableViewController {
                                     }
                                     if let last = outletJSON["last_contact"] as? String {
                                         outlet.lastContact = last
+                                    }
+                                    if let active = outletJSON["status"] as? String {
+                                        if active == "0" {
+                                            outlet.active = false
+                                        }
+                                        if active == "1" {
+                                            outlet.active = true
+                                        }
                                     }
                                     self.outlets.append(outlet)
 //                                    self.realm.write {
