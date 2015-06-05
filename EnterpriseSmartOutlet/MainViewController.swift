@@ -253,12 +253,12 @@ class MainViewController: UITableViewController {
         cell.textLabel?.text = outlets[indexPath.row].name
         cell.detailTextLabel?.text = outlets[indexPath.row].group
         
-        if outlets[indexPath.row].current >= 0.01 {
-            cell.imageView?.image = UIImage(named: "InUse")
+        if outlets[indexPath.row].active == false {
+            cell.imageView?.image = UIImage(named: "Inactive")
         }
             
-        else if outlets[indexPath.row].active == false {
-            cell.imageView?.image = UIImage(named: "Inactive")
+        else if outlets[indexPath.row].current >= 0.01 {
+            cell.imageView?.image = UIImage(named: "InUse")
         }
         
         else {
