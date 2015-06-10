@@ -26,6 +26,7 @@ class OutletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Checks to make sure the outlet isn't nil
         if let newOutlet = outlet {
             voltageLabel.text = String(format: "%.2f", newOutlet.voltage)
             currentLabel.text = String(format: "%.2f", newOutlet.current)
@@ -38,6 +39,7 @@ class OutletViewController: UIViewController {
         }
     }
     
+    // Sets the status of the outlet
     func setStatus(newOutlet: Outlet) {
         if newOutlet.current >= 0.001 {
             statusLabel.text = "Status: In Use"
@@ -59,6 +61,7 @@ class OutletViewController: UIViewController {
                newIP     = ipAddress {
             var url: NSURL?
                 
+            // Creates the URL based on its current status
             if newOutlet.active {
                 url = NSURL(string: "http://" + newIP + ":1337/?deactivate=" + newOutlet.macAddress)
                 outlet!.active = false
@@ -71,6 +74,7 @@ class OutletViewController: UIViewController {
                 setStatus(newOutlet)
             }
             
+            // Checks to make sure the URL isn't nil and sends a request
             if url != nil {
                 let urlRequest = NSURLRequest(URL: url!)
                 NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue(), completionHandler: {(resp: NSURLResponse!, data: NSData!, error: NSError!) -> Void in })
@@ -80,6 +84,7 @@ class OutletViewController: UIViewController {
 //                self.presentViewController(alert, animated: true, completion: nil)
             }
             
+            // Gives an error about not forming a valid URL
             else {
                 let alert = UIAlertController(title: "Problem Forming Server URL", message: "There has been a problem toggling the outlet.", preferredStyle: UIAlertControllerStyle.Alert)
                 let okay = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
